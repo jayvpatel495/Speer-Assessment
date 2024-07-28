@@ -3,12 +3,12 @@ from bs4 import BeautifulSoup
 import validators
 import re
 
-def is_valid_wikipedia_link(url):
-    """ Validate if the URL is a valid Wikipedia link """
+def valid_wikipedia_link(url):
+    #Validate if the URL is a valid Wikipedia link
     return validators.url(url) and 'wikipedia.org' in url
 
 def get_wikipedia_links(url):
-    """ Get unique Wikipedia links from the given URL """
+    #Get unique Wikipedia links from the given URL
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
     links = set()
@@ -22,8 +22,8 @@ def get_wikipedia_links(url):
     return links
 
 def scrape_wikipedia(start_url, n):
-    """ Scrape Wikipedia links up to n cycles """
-    if not is_valid_wikipedia_link(start_url):
+    #Scrape Wikipedia links up to n cycles
+    if not valid_wikipedia_link(start_url):
         raise ValueError("Invalid Wikipedia URL")
     if not (1 <= n <= 3):
         raise ValueError("n must be an integer between 1 and 3")
@@ -62,7 +62,7 @@ def scrape_wikipedia(start_url, n):
 
 def main():
     start_url = input("Enter a Wikipedia URL: ").strip()
-    n = int(input("Enter the number of cycles (1 to 3): ").strip())
+    n = int(input("Enter the number of cycles 1 to 3: ").strip())
     
     try:
         links = scrape_wikipedia(start_url, n)
